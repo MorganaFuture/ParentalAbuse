@@ -6,7 +6,7 @@ mkdir build
 cd build
 cmake ..
 make
-``
+```
 # Run
 
 Run the program with the period option
