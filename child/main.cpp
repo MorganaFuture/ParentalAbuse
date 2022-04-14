@@ -19,11 +19,11 @@ int main(int argc, char *argv[])
         return -1;
 
     std::cout << "Hello from child" << std::endl;
-    std::string str_key = argv[1];
-    std::string str_period = argv[2];
+    const std::string str_key = argv[1];
+    const std::string str_period = argv[2];
     const int period = std::stoi(str_period);
     const key_t key = std::stoi(str_key);
-    int shmid = shmget(key, sizeof(int), 0666|IPC_CREAT);
+    const int shmid = shmget(key, sizeof(int), 0666|IPC_CREAT);
     int *counter = (int*) shmat(shmid,(void*)0,0);
     std::thread increment_thread(increment, counter, period);
 
