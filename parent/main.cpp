@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
         return -1;
 
     std::vector<const char*> agrv = {CILD_PATH, memory_key.data(), std::to_string(period).data(), NULL};
-    Parent::restart_process(agrv.data());
+    Parent::run_process(agrv.data());
 
     return 0;
 }

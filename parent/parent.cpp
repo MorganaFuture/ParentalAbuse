@@ -22,7 +22,7 @@ namespace Parent
         return pid;
     }
 
-    void restart_process(const char **argv)
+    void run_process(const char **argv)
     {
         pid_t pid = exec_prog(argv);
         int status = 0;
