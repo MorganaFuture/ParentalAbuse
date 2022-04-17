@@ -4,7 +4,7 @@
 #include <vector>
 
 #include <iostream>
-#include "procces.h"
+#include "parent.h"
 #include "utilities.h"
 
 struct sigaction old_action;
@@ -38,11 +38,11 @@ int main(int argc, char *argv[])
         return -1;
 
     const std::string memory_key = Utilities::create_shared_memory(SHARED_MEMORY_PATH, 65, sizeof(int));
-    std::vector<const char*> agrv = {CILD_PATH, &memory_key[0], &std::to_string(period)[0], NULL};
-    Procces child(agrv.data());
+    if(memory_key.empty())
+        return -1;
 
-    for(;;)
-        ;
+    std::vector<const char*> agrv = {CILD_PATH, memory_key.data(), std::to_string(period).data(), NULL};
+    Parent::restart_process(agrv.data());
 
     return 0;
 }

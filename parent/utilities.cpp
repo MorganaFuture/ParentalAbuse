@@ -4,6 +4,7 @@
 #include <sys/shm.h>
 
 #include <algorithm>
+#include <string>
 
 namespace Utilities
 {
@@ -34,9 +35,21 @@ namespace Utilities
     std::string create_shared_memory(const char *filepath, const int id, const size_t space)
     {
         const key_t key = ftok(filepath,id);
+        if(key == -1)
+            return "";
+
         const int shmid = shmget(key, space, 0666|IPC_CREAT);
-        shmat(shmid,(void*)0,0);
-        shmctl(shmid,IPC_RMID, 0);
+        if(shmid == -1)
+            return "";
+
+        const void *buf = shmat(shmid,(void*)0,0);
+        if (buf == (void *) -1)
+		    return "";
+
+        const int status = shmctl(shmid, IPC_RMID, 0);
+        if(status == -1)
+            return "";
+
         return std::to_string(key);
     }
-}
+} // Utilities
